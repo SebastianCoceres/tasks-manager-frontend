@@ -3,6 +3,7 @@ import queryString from "query-string";
 
 // const baseUrl = 'http://[::1]:5000/api/v1/';
 const baseUrl = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? 'http://[::1]:5000/api/v1/': 'http://srv-captain--tasks-manager-backend/api/v1/';
+console.log(baseUrl)
 const getToken = () => localStorage.getItem("token");
 
 const axiosClient = axios.create({
