@@ -73,7 +73,7 @@ const Signup = () => {
       navigate("/");
     } catch (err) {
       const errors = err.data.errors;
-      errors.forEach((e) => {
+      errors?.forEach((e) => {
         if (e.param === "username") {
           setUsernameErrText(e.msg);
         }
