@@ -4,6 +4,8 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  Typography,
+  Alert,
 } from "@mui/material";
 import { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -72,7 +74,7 @@ const Signup = () => {
       localStorage.setItem("token", res.token);
       navigate("/");
     } catch (err) {
-      console.log(err)
+      console.log(err);
       const errors = err.data.errors;
       errors?.forEach((e) => {
         if (e.param === "username") {
@@ -178,7 +180,17 @@ const Signup = () => {
           error={verificationCodeErrText !== ""}
           helperText={verificationCodeErrText}
           autoComplete="new-password"
+          title=""
         />
+        <Alert severity="info">
+          <Typography variant="caption">
+            <p>Por recursos, únicamente permito que se registren conocidos.</p>
+            <p>
+              Si eres un reclutador. Puedes probar la app con el usuario Test 😊 <br />( pass: test123!
+              ){" "}
+            </p>
+          </Typography>
+        </Alert>
 
         <LoadingButton
           sx={{ mt: 3, mb: 2 }}
