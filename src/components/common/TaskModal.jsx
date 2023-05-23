@@ -6,6 +6,7 @@ import {
   Typography,
   Divider,
   Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
@@ -29,8 +30,6 @@ import "moment/locale/es";
 
 let timer;
 const timeout = 500;
-const labelAddToCalendar = { inputProps: { "aria-label": "Add to calendar" } };
-const labelDone = { inputProps: { "aria-label": "Mark as done" } };
 
 const TaskModal = (props) => {
   const boardId = props.boardId;
@@ -191,13 +190,20 @@ const TaskModal = (props) => {
                   fontSize: "2rem",
                   fontWeight: "700",
                 },
+                "& .MuiOutlinedInput-input:focus": { outline: "1px solid #dddddd33" },
               }}
               onChange={updateTitle}
             ></TextField>
           </Box>
         ) : (
           <>
-            <Typography sx={{ fontSize: "2rem", fontWeight: "700", margin: 0 }}>
+            <Typography
+              sx={{ fontSize: "2rem", fontWeight: "700", margin: 0 }}
+              onClick={() => {
+                editorWrapperRef.current.focus();
+                setEdit(true);
+              }}
+            >
               {title !== "" ? title : "Untitled"}
             </Typography>
           </>
@@ -236,7 +242,13 @@ const TaskModal = (props) => {
               }}
             />
           ) : (
-            <div dangerouslySetInnerHTML={{ __html: content }} />
+            <div
+              dangerouslySetInnerHTML={{ __html: content }}
+              onClick={() => {
+                editorWrapperRef.current.focus();
+                setEdit(true);
+              }}
+            />
           )}
         </Box>
         <Box
@@ -270,7 +282,12 @@ const TaskModal = (props) => {
               alignItems: "center",
             }}
           >
-            <Checkbox checked={taskDone} {...labelDone} onClick={updateDone} />
+            <FormControlLabel
+              control={<Checkbox checked={taskDone} onClick={updateDone} />}
+              label={!taskDone && "Marcar como finalizado"}
+              sx={{ fontSize: ".5em" }}
+            />
+
             {taskDone && (
               <Typography
                 sx={{ fontSize: ".8em", color: "#a9a9a9", margin: 0 }}
@@ -297,12 +314,19 @@ const TaskModal = (props) => {
                 {MomentES(date)}
               </Typography>
             )}
-            <Checkbox
-              checked={addedToCalendar}
-              {...labelAddToCalendar}
-              icon={<EventIcon sx={{ opacity: "0.2" }} />}
-              checkedIcon={<EventIcon />}
-              onClick={updateAddToCalendar}
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={addedToCalendar}
+                  icon={<EventIcon sx={{ opacity: "0.2" }} />}
+                  checkedIcon={<EventIcon />}
+                  onClick={updateAddToCalendar}
+                />
+              }
+              labelPlacement="start"
+              label={!addedToCalendar && "Agregar al calendario"}
+              sx={{ fontSize: ".5em" }}
             />
           </Box>
         </Box>
