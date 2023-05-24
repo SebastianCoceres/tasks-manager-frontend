@@ -107,6 +107,7 @@ const Board = () => {
     setDescription(newDescription);
 
     timer = setTimeout(async () => {
+      console.log(newDescription);
       try {
         await boardApi.update(boardId, { description: newDescription });
       } catch (error) {
