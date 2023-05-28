@@ -12,6 +12,7 @@ import Board from "./pages/Board";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Calendar from "./pages/Calendar";
+import User from "./pages/User";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="boards" element={<Home />} />
             <Route path="boards/:boardId" element={<Board />} />
             <Route path="calendar" element={<Calendar />} />
+            <Route path="user" element={<User />} />
           </Route>
 
         </Routes>

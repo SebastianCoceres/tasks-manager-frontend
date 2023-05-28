@@ -8,7 +8,7 @@ import {
   Badge,
   Card,
   CardContent,
-  IconButton,
+  Button,
   Typography,
   Divider,
   Tooltip,
@@ -22,7 +22,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { DayCalendarSkeleton } from "@mui/x-date-pickers/DayCalendarSkeleton";
-import ExportPDF from "../components/common/ExportPDF";
+// import ExportPDF from "../components/common/ExportPDF";
 
 const initialValue = Moment(Date.now());
 
@@ -79,7 +79,7 @@ export default function DateCalendarTasks() {
 
   useEffect(() => {
     const tasksFilter = tasks.filter((el) => {
-      return MomentES(el.date) === MomentES(value);
+      return MomentES(el.date) === MomentES(value) && el.done === false;
     });
     setTasksInThisDay(tasksFilter);
   }, [tasks]);
@@ -183,7 +183,7 @@ export default function DateCalendarTasks() {
                     }}
                   >
                     <Typography noWrap={true} variant="h3" fontSize={"1.5em"}>
-                      {task.title}
+                      {task.title || "Sin título"}
                     </Typography>
                     <Typography
                       sx={{
@@ -225,22 +225,32 @@ export default function DateCalendarTasks() {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Tooltip
-                      title={
-                        task.board.icon +
-                        " " +
-                        task.board.title +
-                        " - " +
-                        task.section.title
-                      }
-                    >
-                      <IconButton
+                    <Tooltip title="Ir al tablero">
+                      <Button
                         component={Link}
                         to={`/boards/${task.board.id}`}
                         aria-label="Ver detalle"
+                        sx={{
+                          "&:hover .btnCaption": {
+                            borderBottom: "1px solid #ddd",
+                          },
+                        }}
                       >
+                        <Typography
+                          variant="caption"
+                          className="btnCaption"
+                          sx={{
+                            mr: ".5em",
+                          }}
+                        >
+                          {task.board.icon +
+                            " " +
+                            task.board.title +
+                            " - " +
+                            task.section.title}
+                        </Typography>
                         <RemoveRedEyeOutlinedIcon />
-                      </IconButton>
+                      </Button>
                     </Tooltip>
                     {task.done ? (
                       <Tooltip

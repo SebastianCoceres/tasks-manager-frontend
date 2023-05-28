@@ -151,6 +151,7 @@ function Kanban(props) {
       (el) => el.id === task.id
     );
     newData[sectionIndex].tasks[taskIndex].done = newValue;
+    newData[sectionIndex].tasks[taskIndex].addedToCalendar = !newValue;
     newData[sectionIndex].tasks[taskIndex].finishedOnDate = !!newValue
       ? Date.now()
       : "";

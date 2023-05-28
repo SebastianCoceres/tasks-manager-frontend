@@ -7,10 +7,14 @@ import {
   ListItemButton,
   ListItem,
   Typography,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import assets from "../../assets/index";
 import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -26,6 +30,8 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const { boardId } = useParams();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [userMenu, setUserMenu] = useState(null);
+  const open = Boolean(userMenu);
 
   const SIDEBARWIDTH = 250;
   const location = useLocation();
@@ -47,7 +53,8 @@ const Sidebar = () => {
     if (
       boards.length > 0 &&
       boardId === undefined &&
-      location.pathname != "/calendar"
+      location.pathname != "/calendar" &&
+      location.pathname != "/user"
     ) {
       navigate(`/boards/${boards[0].id}`);
     }
@@ -87,6 +94,10 @@ const Sidebar = () => {
     }
   };
 
+  const openUserMenu = (event) => {
+    setUserMenu(event.currentTarget);
+  };
+
   return (
     <Drawer
       container={window.document.body}
@@ -104,27 +115,60 @@ const Sidebar = () => {
           width: SIDEBARWIDTH,
           height: "100vh",
           backgroundColor: assets.colors.second,
-          padding: "1em 0",
         }}
       >
-        <ListItem sx={{ marginBottom: ".5em" }}>
-          <Box
+        <ListItem>
+          <ListItemButton
             sx={{
               width: "100%",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              mx: "-1em",
+              color: "white",
             }}
+            selected={location.pathname === "/calendar"}
+            onClick={openUserMenu}
           >
             <Typography variant="body2" fontWeight="700">
               {user.username}
             </Typography>
-            <IconButton aria-label="Logout" onClick={logout}>
-              <LogoutOutlinedIcon fontSize="small" />
-            </IconButton>
-          </Box>
+            <Box
+              sx={{
+                padding: "8px",
+              }}
+            >
+              <AccountCircleOutlinedIcon fontSize="small" />
+            </Box>
+          </ListItemButton>
+          <Menu
+            id="user-menu"
+            anchorEl={userMenu}
+            open={open}
+            onClose={() => setUserMenu(null)}
+            MenuListProps={{
+              "aria-labelledby": "user-button",
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                setUserMenu(null);
+                logout();
+              }}
+            >
+              <LogoutOutlinedIcon fontSize="small" /> Salir
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setUserMenu(null);
+                navigate("/user");
+              }}
+            >
+              <SettingsOutlinedIcon fontSize="small" /> Mi cuenta
+            </MenuItem>
+          </Menu>
         </ListItem>
-        <ListItem sx={{ marginBottom: ".5em" }}>
+        <ListItem>
           <ListItemButton
             component={Link}
             to={"/calendar"}
