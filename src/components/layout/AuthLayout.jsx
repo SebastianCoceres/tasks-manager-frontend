@@ -31,7 +31,7 @@ const AuthLayout = () => {
           flexDirection: "column",
         }}
       >
-        <h1>SC-Taskmanager</h1>
+        <h1>Planify</h1>
         <Outlet />
       </Box>
     </Container>
