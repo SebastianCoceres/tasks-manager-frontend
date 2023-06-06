@@ -186,7 +186,7 @@ const Signup = () => {
           <Typography variant="caption">
             <p>Por recursos, únicamente permito que se registren conocidos.</p>
             <p>
-              Si eres un reclutador. Puedes probar la app con el usuario Test 😊 <br />( pass: test123!
+              Si eres un reclutador. Puedes probar la app con el usuario Test-User 😊 <br />( pass: test123!
               ){" "}
             </p>
           </Typography>

@@ -158,14 +158,14 @@ const Sidebar = () => {
             >
               <LogoutOutlinedIcon fontSize="small" /> Salir
             </MenuItem>
-            <MenuItem
+            {/* <MenuItem
               onClick={() => {
                 setUserMenu(null);
                 navigate("/user");
               }}
             >
               <SettingsOutlinedIcon fontSize="small" /> Mi cuenta
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
         </ListItem>
         <ListItem>
